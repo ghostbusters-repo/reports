@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refills Funnel Flow</title>
+<meta name="description" content="Screen-by-screen walkthrough of the Refills GLP-1 funnel, captured 2026-09-03.">
+<style>
+  :root{
+    --bg:#f2f1e8; --panel:#ffffff; --ink:#132f2b; --muted:#5b6d69; --line:#d9dcd3;
+    --brand:#123b36; --brand-soft:#e3ece7; --accent:#e5f26f; --chip:#eef0e6;
+    --p1:#cfe3d8; --p2:#dbe4f4; --p3:#f4e4d2; --p4:#ecd9f0; --p5:#fbe9c9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--brand)}
+  header.top{background:var(--brand);color:#fff;padding:36px 20px 28px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  header .wrap{padding:0}
+  h1{margin:0 0 6px;font-size:30px;letter-spacing:-.01em}
+  .sub{margin:0;opacity:.85;max-width:720px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;font-size:13px;opacity:.9}
+  .meta b{font-weight:600}
+
+  /* phase stepper */
+  .stepper{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:-22px auto 0;max-width:1100px;padding:0 20px}
+  .ph{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;text-decoration:none;color:var(--ink);display:block;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .ph:hover{border-color:var(--brand)}
+  .ph .n{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .ph .t{font-weight:650;margin:2px 0 4px}
+  .ph .c{font-size:12px;color:var(--muted)}
+  .ph .bar{height:6px;border-radius:3px;margin-top:10px}
+
+  /* flow map */
+  section.map{margin:34px auto 10px}
+  .map h2,.flow h2{font-size:18px;margin:0 0 12px}
+  .mapgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .mapgrid a{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 10px;text-decoration:none;color:var(--ink);font-size:13px;line-height:1.35}
+  .mapgrid a:hover{border-color:var(--brand)}
+  .mapgrid .num{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--ink)}
+  .mapgrid .lbl b{display:block;font-weight:600}
+  .mapgrid .lbl span{color:var(--muted);font-size:12px}
+
+  /* steps */
+  .flow{margin-top:34px;padding-bottom:60px}
+  .step{position:relative;display:grid;grid-template-columns:minmax(260px,380px) 1fr;gap:26px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:22px;scroll-margin-top:16px}
+  .step .info{min-width:0}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;color:var(--ink)}
+  .step h3{margin:12px 0 4px;font-size:20px;line-height:1.25}
+  .step h3 .num{color:var(--muted);font-weight:500;margin-right:8px}
+  .q{font-size:15px;color:var(--ink);margin:0 0 10px}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;color:var(--muted);margin:14px 0 0}
+  .kv dt{font-weight:600;color:var(--ink)}
+  .kv dd{margin:0;word-break:break-word}
+  .opts{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;list-style:none}
+  .opts li{background:var(--chip);border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:12.5px}
+  .note{margin:12px 0 0;padding:10px 12px;background:var(--brand-soft);border-radius:10px;font-size:13px}
+  .shot{margin:0;min-width:0}
+  .shot a{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#e9eae2;max-height:640px}
+  .shot img{display:block;width:100%;height:auto;max-height:640px;object-fit:contain;object-position:top;background:#e9eae2}
+  .shot figcaption{font-size:12px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .connector{width:2px;height:22px;background:var(--line);margin:-22px auto 0;position:relative;top:0}
+  .arrow{text-align:center;color:var(--muted);font-size:12px;margin:-14px 0 8px}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;background:rgba(10,20,18,.92);display:none;z-index:50;overflow:auto;padding:24px}
+  .lb.on{display:block}
+  .lb img{display:block;margin:0 auto;max-width:100%;height:auto;border-radius:6px}
+  .lb .x{position:fixed;top:14px;right:18px;color:#fff;background:rgba(255,255,255,.15);border:0;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+  .lb .cap{color:#fff;text-align:center;font-size:13px;margin:10px 0 14px;opacity:.85}
+
+  footer{color:var(--muted);font-size:12px;padding:20px;text-align:center;border-top:1px solid var(--line)}
+  @media (max-width:820px){
+    .stepper{grid-template-columns:repeat(2,1fr)}
+    .step{grid-template-columns:1fr}
+    .shot a,.shot img{max-height:none}
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Refills Funnel Flow</h1>
+    <p class="sub">Every screen a new visitor sees from the paid landing page through plan selection, in the order they appear. Click any screenshot to view it full size.</p>
+    <div class="meta">
+      <span><b>Captured</b> Sep 3, 2026, 2:38–2:47 PM</span>
+      <span><b>Screens</b> 23</span>
+      <span><b>Path</b> lp.refills.com → my.refills.com/v3/conf → my.refills.com/c/v3/checkout</span>
+    </div>
+  </div>
+</header>
+
+<nav class="stepper" id="stepper"></nav>
+
+<main class="wrap">
+  <section class="map">
+    <h2>Flow map</h2>
+    <div class="mapgrid" id="mapgrid"></div>
+  </section>
+
+  <section class="flow">
+    <h2>Screen by screen</h2>
+    <div id="steps"></div>
+  </section>
+</main>
+
+<div class="lb" id="lb" aria-hidden="true">
+  <button class="x" id="lbx">Close ✕</button>
+  <p class="cap" id="lbcap"></p>
+  <img id="lbimg" alt="">
+</div>
+
+<footer>Screenshots captured Sep 3, 2026 · Web-optimized images shown; each links to the full-resolution original.</footer>
+
+<script>
+const PHASES = [
+  {id:'landing', name:'Landing page', color:'var(--p1)', desc:'Paid-traffic entry point'},
+  {id:'lifestyle', name:'Goals & lifestyle', color:'var(--p2)', desc:'8 intake questions'},
+  {id:'medical', name:'Medical history', color:'var(--p3)', desc:'7 safety screens'},
+  {id:'account', name:'Consent & account', color:'var(--p4)', desc:'Consent, signup, phone'},
+  {id:'checkout', name:'Treatment & checkout', color:'var(--p5)', desc:'Med choice, shipping, plans'},
+];
+
+const STEPS = [
+  {t:'14:38:21', ph:'landing', host:'lp.refills.com', path:'/lp/brand', title:'Landing page', q:'Personalized GLP-1s · Summer Sale – 40% Off',
+   opts:['Plans as low as $99/mo','4.8★ rating','40% off + Get Started CTA','Branded meds: Wegovy, Zepbound, Ozempic','3-step "how it works"','FAQ accordion'],
+   note:'Long-form brand landing page. Multiple “Get Started” CTAs push into the /v3/conf questionnaire.',
+   file:'screencapture-lp-refills-lp-brand-2026-09-03-14_38_21', dims:'5958×12220'},
+
+  {t:'14:39:58', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Weight-loss goal', q:'How much weight would you like to lose?', type:'Single select',
+   opts:['Lose 10–20 lbs','Lose 20–50 lbs','Lose 50+ lbs','Maintain current weight'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_39_58'},
+  {t:'14:40:12', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Primary goals', q:'What are your primary goals?', type:'Multi select',
+   opts:['Weight loss','Health improvement','Increased confidence','More energy','Enhanced appearance','Improved sexual health'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_40_12'},
+  {t:'14:40:23', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Previous attempts', q:'What have you previously tried for weight loss?', type:'Multi select',
+   opts:['Exercise','Dieting','Supplements','Intermittent fasting','Weight-loss programs','None'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_40_23'},
+  {t:'14:40:48', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Current diet', q:'Are you currently following a specific diet?', type:'Yes / No',
+   opts:['Yes','No'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_40_48'},
+  {t:'14:41:02', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Caloric intake', q:'Are you willing to reduce your caloric intake while using medication?', type:'Yes / No',
+   opts:['Yes','No'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_41_02'},
+  {t:'14:41:35', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Exercise frequency', q:'How often do you exercise?', type:'Single select',
+   opts:['Never','1–2 times per week','3–4 times per week','5+ times per week'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_41_35'},
+  {t:'14:42:48', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Sex assigned at birth', q:'Sex Assigned at Birth', type:'Single select',
+   opts:['Male','Female'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_42_48'},
+  {t:'14:42:57', ph:'lifestyle', host:'my.refills.com', path:'/v3/conf', title:'Height & weight', q:'What is your current height and weight?', type:'Numeric inputs',
+   opts:['Height (ft / in)','Weight (lbs)'], note:'Last question of phase 1. Likely used for BMI eligibility.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_42_57'},
+
+  {t:'14:43:36', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'Prescription medications', q:'Do you currently take any prescription medications?', type:'Yes / No',
+   opts:['Yes','No'], note:'Progress bar advances to segment 3. Button label changes from “Continue” to “Next.”', file:'screencapture-my-refills-v3-conf-2026-09-03-14_43_36'},
+  {t:'14:43:46', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'Allergies', q:'Do you have any allergies?', type:'Yes / No',
+   opts:['Yes','No'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_43_46'},
+  {t:'14:43:54', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'Medical conditions', q:'Current and past medical conditions', type:'Multi select (13 options)',
+   opts:['High blood pressure','High cholesterol','Heart disease','Kidney disease','Liver disease','Thyroid disease','Pancreatitis','Gallbladder disease','Cancer','Depression/Anxiety','Eating disorder','Diabetes (Type 1 or 2)','None of these'],
+   file:'screencapture-my-refills-v3-conf-2026-09-03-14_43_54'},
+  {t:'14:44:06', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'GLP-1 allergies', q:'Are you allergic to any of the following?', type:'Multi select',
+   opts:['Semaglutide','Tirzepatide','Liraglutide','Dulaglutide','B12 (Cyanocobalamin)','None of these'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_44_06'},
+  {t:'14:44:17', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'Diabetes medications', q:'Do you take any of the following medications?', type:'Multi select',
+   opts:['Insulin','Sulfonylureas','Other diabetes medications','None of these'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_44_17'},
+  {t:'14:44:26', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'Gastric bypass', q:'Have you had a gastric bypass in the past 6 months?', type:'Yes / No',
+   opts:['Yes','No'], file:'screencapture-my-refills-v3-conf-2026-09-03-14_44_26'},
+  {t:'14:44:35', ph:'medical', host:'my.refills.com', path:'/v3/conf', title:'Anything else for the doctor', q:'Do you have anything else you want to let your doctor know?', type:'Yes / No',
+   opts:['Yes','No'], note:'Progress bar advances to the final segment.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_44_35'},
+
+  {t:'14:44:45', ph:'account', host:'my.refills.com', path:'/v3/conf', title:'Telehealth consent', q:'Consent to Treatment via Telehealth', type:'Checkbox + Next',
+   opts:['I consent to the above'], note:'Scrollable consent text with a required checkbox before “Next” enables.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_44_45'},
+  {t:'14:44:59', ph:'account', host:'my.refills.com', path:'/v3/conf', title:'Account creation', q:'Let’s get your information — finish creating your account below to continue', type:'Form',
+   opts:['Email','First name','Last name','Create password (8+ chars, uppercase, number, symbol)','Agree to terms, privacy policy, telehealth consent','Create Account'],
+   note:'Account is created before treatment choice, shipping, and pricing are shown.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_44_59'},
+  {t:'14:45:48', ph:'account', host:'my.refills.com', path:'/v3/conf', title:'Phone number', q:'Please enter your phone number', type:'Input + SMS consent',
+   opts:['(555) 123-4567','SMS consent checkbox (pre-checked)'], note:'SMS consent is pre-checked. Copy covers appointment and product messages, STOP/HELP.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_45_48'},
+
+  {t:'14:46:12', ph:'checkout', host:'my.refills.com', path:'/v3/conf', title:'Treatment choice', q:'Which treatment are you interested in today?', type:'Single select',
+   opts:['Semaglutide-based treatments','Tirzepatide-based treatments'], note:'Semaglutide is pre-selected and “Next” is already active.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_46_12'},
+  {t:'14:46:24', ph:'checkout', host:'my.refills.com', path:'/v3/conf', title:'Shipping address', q:'Where should we ship your order?', type:'Form',
+   opts:['Street','Apt / Suite (optional)','City','State','Zip'], note:'Last screen of /v3/conf before handoff to checkout.', file:'screencapture-my-refills-v3-conf-2026-09-03-14_46_24'},
+  {t:'14:46:47', ph:'checkout', host:'my.refills.com', path:'/c/v3/checkout', title:'Checkout — Semaglutide plans', q:'Choose Your Perfect Plan (Semaglutide)', type:'Plan picker · mobile-width capture',
+   opts:['Monthly $199/mo (was $249)','3 Month $159/mo · Most Popular','6 Month $139/mo · Most Savings','Annual $99/mo','New patient coupon auto-applied','Switch to Tirzepatide link'],
+   note:'Matches the landing page promise of “as low as $99/mo” (annual plan).', file:'screencapture-my-refills-c-v3-checkout-2026-09-03-14_46_47', dims:'1258×3587 (mobile)'},
+  {t:'14:47:03', ph:'checkout', host:'my.refills.com', path:'/c/v3/checkout', title:'Checkout — Tirzepatide plans', q:'Choose Your Perfect Plan (Tirzepatide)', type:'Plan picker · desktop capture',
+   opts:['Monthly $249/mo (was $349)','3 Month $209/mo · Most Popular','6 Month $179/mo · Most Savings','Annual $159/mo','New patient coupon auto-applied','Switch to Semaglutide link'],
+   note:'Same layout as Semaglutide with a $50–$60/mo premium per tier.', file:'screencapture-my-refills-c-v3-checkout-2026-09-03-14_47_03'},
+];
+
+const DIMS = {"screencapture-lp-refills-lp-brand-2026-09-03-14_38_21": [5958, 12220], "screencapture-my-refills-c-v3-checkout-2026-09-03-14_46_47": [1258, 3587], "screencapture-my-refills-c-v3-checkout-2026-09-03-14_47_03": [5958, 3748], "screencapture-my-refills-v3-conf-2026-09-03-14_43_54": [5958, 2848]};
+const phaseById = Object.fromEntries(PHASES.map(p=>[p.id,p]));
+const counts = {}; STEPS.forEach(s=>counts[s.ph]=(counts[s.ph]||0)+1);
+
+// stepper
+document.getElementById('stepper').innerHTML = PHASES.map((p,i)=>{
+  const first = STEPS.findIndex(s=>s.ph===p.id)+1;
+  return `<a class="ph" href="#step-${first}"><div class="n">Phase ${i+1}</div><div class="t">${p.name}</div><div class="c">${p.desc} · ${counts[p.id]} screen${counts[p.id]>1?'s':''}</div><div class="bar" style="background:${p.color}"></div></a>`;
+}).join('');
+
+// map
+document.getElementById('mapgrid').innerHTML = STEPS.map((s,i)=>
+  `<a href="#step-${i+1}"><span class="num" style="background:${phaseById[s.ph].color}">${i+1}</span><span class="lbl"><b>${s.title}</b><span>${s.t} · ${phaseById[s.ph].name}</span></span></a>`
+).join('');
+
+// steps
+document.getElementById('steps').innerHTML = STEPS.map((s,i)=>{
+  const p = phaseById[s.ph];
+  const img = `img/${s.file}.jpg`, full = `${s.file}.png`;
+  const wh = DIMS[s.file] || [5958,2744];
+  return `${i?'<div class="arrow">↓</div>':''}
+  <article class="step" id="step-${i+1}">
+    <div class="info">
+      <span class="badge" style="background:${p.color}">${p.name}</span>
+      <h3><span class="num">${String(i+1).padStart(2,'0')}</span>${s.title}</h3>
+      <p class="q">${s.q}</p>
+      ${s.opts?`<ul class="opts">${s.opts.map(o=>`<li>${o}</li>`).join('')}</ul>`:''}
+      ${s.note?`<p class="note">${s.note}</p>`:''}
+      <dl class="kv">
+        <dt>Captured</dt><dd>Sep 3, 2026 · ${s.t}</dd>
+        <dt>URL</dt><dd>${s.host}${s.path}</dd>
+        ${s.type?`<dt>Input</dt><dd>${s.type}</dd>`:''}
+        <dt>File</dt><dd><a href="${full}">${s.file}.png</a>${s.dims?` · ${s.dims}`:''}</dd>
+      </dl>
+    </div>
+    <figure class="shot">
+      <a href="${full}" data-full="${full}" data-cap="${i+1}. ${s.title} — ${s.t}"><img loading="lazy" width="${wh[0]}" height="${wh[1]}" style="aspect-ratio:${wh[0]}/${wh[1]}" src="${img}" alt="${s.title} screenshot"></a>
+      <figcaption><span>Click to enlarge</span><span><a href="${full}" target="_blank" rel="noopener">Open original ↗</a></span></figcaption>
+    </figure>
+  </article>`;
+}).join('');
+
+// lightbox
+const lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg'), lbcap=document.getElementById('lbcap');
+document.querySelectorAll('.shot a[data-full]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); lbimg.src=a.dataset.full; lbcap.textContent=a.dataset.cap; lb.classList.add('on'); lb.scrollTop=0;
+}));
+const close=()=>{lb.classList.remove('on'); lbimg.src='';};
+document.getElementById('lbx').addEventListener('click',close);
+lb.addEventListener('click',e=>{ if(e.target===lb||e.target===lbimg) close(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+</script>
+</body>
+</html>
